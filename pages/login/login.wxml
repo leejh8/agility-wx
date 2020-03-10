@@ -1,0 +1,26 @@
+<view class="content">
+  <view class="userinfo">
+    <view bindtap="bindViewTap" class="userinfo">
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+  </view>
+  <form bindsubmit="formSubmit">
+    <view class="input_area">
+      <view class="input_log">
+        <image class="user_Icon" src="{{logIcon}}"></image>
+        <input id="username" name="username" maxlength='40' type="text" placeholder="账号" value="{{inputUsernameDate}}" />
+      </view>
+      <view class="input_log">
+        <image class="user_Icon" src="{{pwdIcon}}"></image>
+        <input id="password" name="password" maxlength='20' type="password" placeholder="密码" value="{{inputPasswordDate}}" />
+      </view>
+    </view>
+    <view class="btn_area">
+      <button disabled="{{disabled}}" formType="submit" loading="{{btnLoading}}"> {{loginBtnTxt}} </button>
+      <view class="txt_area">
+        <checkbox value="remember" style="transform:scale(.7)">记住密码</checkbox>
+      </view>
+    </view>
+  </form>
+</view>
