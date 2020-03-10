@@ -21,13 +21,13 @@
         "pagePath": "pages/search/search",
         "iconPath": "image/tabbar/5.png",
         "selectedIconPath": "image/tabbar/5-hl.png",
-        "text": "搜索"
+        "text": "打卡检索"
       },
       {
         "pagePath": "pages/setting/setting",
         "iconPath": "image/tabbar/1.png",
         "selectedIconPath": "image/tabbar/1-hl.png",
-        "text": "我的音乐"
+        "text": "我的信息"
       }
     ]
   },

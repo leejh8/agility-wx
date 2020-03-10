@@ -18,5 +18,6 @@
   </view>
   <text wx:if="{{error}}" class="error">{{error}}</text>
   <text class="hint">通过小程序登录的用户设置、修改用户名密码后可以在“迅捷先研”的其他平台的App中登录</text>
-  <button class="submit" type="primary" disabled="{{!(username || password)}}" bindtap="save">注册</button>
+  <!-- <button class="submit" type="primary" disabled="{{!(username || password)}}" bindtap="save">注册</button> -->
+  <button class="submit" type="primary" bindtap="save">注册</button>
 </view>

@@ -13,7 +13,7 @@
   height: 200rpx;
   margin: 20rpx;
   border-radius: 50%;
-  background-color: whitesmoke;
+  background-color: black;
 }
 
 .userinfo-nickname {
