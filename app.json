@@ -1,16 +1,11 @@
 {
   "pages": [
-    "pages/search/search",
-    "pages/setting/setting"
+    "pages/setting/setting",
+    "pages/search/search"
   ],
   "window": {
-    "enablePullDownRefresh": true,
-    "backgroundTextStyle": "dark",
-    "backgroundColor": "#f2f2f2",
-    "navigationBarBackgroundColor": "#fbfbfb",
-    "navigationBarTitleText": "LeanTodo",
-    "navigationBarTextStyle": "black"
   },
+  "style": "v2",
   "tabBar": {
     "color": "#929292",
     "selectedColor": "#ff2d55",
@@ -19,15 +14,15 @@
     "list": [
       {
         "pagePath": "pages/search/search",
-        "iconPath": "image/tabbar/5.png",
-        "selectedIconPath": "image/tabbar/5-hl.png",
+        "iconPath": "image/tabbar/search.png",
+        "selectedIconPath": "image/tabbar/search-hl.png",
         "text": "打卡检索"
       },
       {
         "pagePath": "pages/setting/setting",
-        "iconPath": "image/tabbar/1.png",
-        "selectedIconPath": "image/tabbar/1-hl.png",
-        "text": "我的信息"
+        "iconPath": "image/tabbar/setting.png",
+        "selectedIconPath": "image/tabbar/setting-hl.png",
+        "text": "设置"
       }
     ]
   },

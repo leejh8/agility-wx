@@ -1,7 +1,7 @@
 var pageObject = {
   data: {
     searchRes1: {
-      "singer": {
+      "user": {
         "count": 2,
         "itemlist": [
           {
@@ -10,7 +10,7 @@ var pageObject = {
             "mid": "0020PeOh4ZaCw1",
             "name": "裘东 (Julian Qiu)",
             "pic": "http://imgcache.qq.com/music/photo/mid_singer_58/w/1/0020PeOh4ZaCw1.jpg",
-            "singer": "裘东 (Julian Qiu)"
+            "user": "裘东 (Julian Qiu)"
           },
           {
             "docid": "89698",
@@ -18,14 +18,13 @@ var pageObject = {
             "mid": "003Cn3Yh16q1MO",
             "name": "邱明月",
             "pic": "http://imgcache.qq.com/music/photo/mid_singer_58/M/O/003Cn3Yh16q1MO.jpg",
-            "singer": "邱明月"
+            "user": "邱明月"
           }
         ],
         "name": "未打卡员工",
         "order": 1,
         "type": 2
       },
-
     }
   },
   search: function (e) {
@@ -34,6 +33,13 @@ var pageObject = {
     wx.showLoading({
       title: "正在检索",
     });
+    setTimeout(function () {
+      wx.hideLoading();
+      that.setData({
+        searchRes: that.data.searchRes1,
+      })
+    }, 2000);
+    /*
     wx.request({
       url: 'http://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',
       data: {
@@ -66,31 +72,11 @@ var pageObject = {
           })
         }, 2000);
       }
-    })
-  },
-  play: function (event) {
-    var num = event.currentTarget.dataset.num
-    var res = this.data.searchRes.song.itemlist[num]
-    var appInstance = getApp()
-    appInstance.globalData.playing = res
-    // that.setData({
-    //     playBar:res,
-    //     playingSongsNum:event.currentTarget.dataset.num
-    // })
-    console.log('http://stream.qqmusic.tc.qq.com/' + res.id + '.mp3')
-    wx.playBackgroundAudio({
-      dataUrl: 'http://stream.qqmusic.tc.qq.com/' + res.id + '.mp3',
-      title: res.name,
-      singer: res.singer,
-      coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003RMaRI1iFoYd.jpg',
-      complete: function (res) {
-
-      }
-    })
+    })*/
   },
   detail: function (event) {
     var num = event.currentTarget.dataset.num;
-    var res = this.data.searchRes.singer.itemlist[num];
+    var res = this.data.searchRes.user.itemlist[num];
     wx.showModal({
       title: "咦",
       content: "没有 " + res.name + " 的信息",

@@ -1,6 +1,5 @@
 .search {
   color: #888;
-  font-size: smaller;
 }
 
 .search-bar {
@@ -24,17 +23,6 @@
 .search-bar-input {
   width: 100%;
   margin: 0 20rpx;
-}
-
-.arrow {
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid #999;
-  border-right: 2px solid #999;
-  position: absolute;
-  right: 30rpx;
-  transform: rotate(45deg);
-  margin-top: 10rpx;
 }
 
 .result {
@@ -69,60 +57,7 @@
   margin-bottom: 5rpx;
 }
 
-.result-item {
-  display: flex;
-  background: #fff;
-  border-bottom: 1rpx #eee solid;
-  flex-direction: row;
-  margin-left: 20rpx;
-  padding-left: 10rpx;
-  height: 80rpx;
-  align-items: center;
-}
-
-.result-author {
-  color: #929292;
-}
-
-.album-item {
-  height: 80rpx;
-  display: flex;
-  flex: row;
-  border-bottom: #eee 1rpx solid;
-  padding: 20rpx 20rpx;
-  align-items: center;
-}
-
-.album-image {
-  height: 80rpx;
-  width: 80rpx;
-  border-radius: 10rpx;
-}
-
-.album-info {
-  display: flex;
-  flex-direction: column;
-  padding-left: 15rpx;
-}
-
-.album-name {
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.album-author {
-  font-size: 12px;
-  color: #929292;
-  line-height: 20px;
-}
-
-.songs-action-button {
-  height: 40rpx;
-  width: 40rpx;
-  margin-right: 10rpx;
-}
-
-.singer-item {
+.user-item {
   height: 80rpx;
   display: flex;
   flex: row;
@@ -130,13 +65,13 @@
   align-items: center;
 }
 
-.singer-image {
+.user-image {
   height: 80rpx;
   width: 80rpx;
   border-radius: 50%;
 }
 
-.singer-text {
+.user-text {
   display: flex;
   border-bottom: 1rpx #eee solid;
   height: 80rpx;
@@ -145,20 +80,13 @@
   flex-grow: 1;
 }
 
-.mv-item {
-  display: flex;
-  flex-direction: column;
-  border-bottom: #eee 1rpx solid;
-  padding: 20rpx 20rpx;
-}
-
-.mv-name {
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.mv-author {
-  font-size: 12px;
-  color: #929292;
-  line-height: 20px;
+.arrow {
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #999;
+  border-right: 2px solid #999;
+  position: absolute;
+  right: 30rpx;
+  transform: rotate(45deg);
+  margin-top: 10rpx;
 }

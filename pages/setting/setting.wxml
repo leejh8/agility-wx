@@ -1,23 +1,23 @@
-<view class="container">
+<view class=".container-u" wx:if="{{!hasUserInfo && canIUse}}">
+  <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权小程序权限</button>
+</view>
+<view class="container" wx:else>
   <view class="userinfo">
-    <view bindtap="bindViewTap" class="userinfo">
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </view>
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
-  <text class="hint">注册用户信息</text>
+  <text class="hint">登录到云</text>
   <view class="form-wrap">
     <view class="flex-wrap input-wrap">
       <text class="label">用户名</text>
-      <input value="{{user.username}}" bindinput="updateUsername" id="username" class="account-info-input"/>
+      <input value="{{userName}}" bindinput="onUserNameChanged" id="username" class="account-info-input" />
     </view>
     <view class="flex-wrap input-wrap">
-      <text class="label">新密码</text>
-      <input password bindinput="updatePassword" id="password" class="account-info-input"/>
+      <text class="label">密码</text>
+      <input password bindinput="onPasswordChanged" id="password" class="account-info-input" />
     </view>
   </view>
   <text wx:if="{{error}}" class="error">{{error}}</text>
   <text class="hint">通过小程序登录的用户设置、修改用户名密码后可以在“迅捷先研”的其他平台的App中登录</text>
-  <!-- <button class="submit" type="primary" disabled="{{!(username || password)}}" bindtap="save">注册</button> -->
-  <button class="submit" type="primary" bindtap="save">注册</button>
+  <button class="submit" type="primary" disabled="{{!(username || password)}}" bindtap="save">登录</button>
 </view>

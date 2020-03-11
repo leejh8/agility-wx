@@ -1,14 +1,8 @@
-const AV = require('./utils/leancloud-storage');
-
-AV.init({
-  appId: 'ozewwcwsyq92g2hommuxqrqzg6847wgl8dtrac6suxzko333',
-  appKey: 'ni0kwg7h8hwtz6a7dw9ipr7ayk989zo5y8t0sn5gjiel6uav',
-});
-
-
 //app.js
 App({
   onLaunch: function () {
+    var _this = this;
+
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -27,6 +21,9 @@ App({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              if (res.userInfo.avatarUrl === "") {
+                res.userInfo.avatarUrl = this.globalData.emptyAvatarUrl;
+              }
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
 
@@ -42,6 +39,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    emptyAvatarUrl: "https://iknow-pic.cdn.bcebos.com/35a85edf8db1cb132eaa3ca1de54564e93584b44?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1",
   }
 })

@@ -1,3 +1,13 @@
+.container-u {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50% 0;
+  box-sizing: border-box;
+}
+
 .container {
   padding: 4px 12px;
 }
@@ -6,6 +16,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
 }
 
 .userinfo-avatar {
