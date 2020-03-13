@@ -8,22 +8,18 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
     // 获取用户信息
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
+
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
               if (res.userInfo.avatarUrl === "") {
                 res.userInfo.avatarUrl = this.globalData.emptyAvatarUrl;
               }
+
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
 
@@ -33,7 +29,7 @@ App({
                 this.userInfoReadyCallback(res)
               }
             }
-          })
+          });
         }
       }
     })
@@ -41,5 +37,44 @@ App({
   globalData: {
     userInfo: null,
     emptyAvatarUrl: "https://iknow-pic.cdn.bcebos.com/35a85edf8db1cb132eaa3ca1de54564e93584b44?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1",
-  }
+  },
+
+  login: function (userName, password, departmentId) {
+    wx.showLoading({
+      title: '登录中',
+    });
+
+    // 登录
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        wx.request({
+          url: 'https://shgic.com/wx/signup',
+          method: "post",
+          data: {
+            departmentId: departmentId,
+            name: userName,
+            sysUserWxext: {
+              avatarUrl: this.globalData.userInfo.avatarUrl,
+              city: this.globalData.userInfo.city,
+              country: this.globalData.userInfo.country,
+              gender: this.globalData.userInfo.gender,
+              language: this.globalData.userInfo.language,
+              nickName: this.globalData.userInfo.nickName,
+              province: this.globalData.userInfo.province,
+              username: userName,
+              password: password,
+            },
+            wxCode: res.code,
+          },
+          success: function (res) {
+            console.log(res);
+          },
+          complete: function () {
+            wx.hideLoading();
+          },
+        });
+      }
+    });
+  },
 })

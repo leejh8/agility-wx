@@ -7,8 +7,12 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userName: null,
     password: null,
+    departmentIndex: -1,
+    departments: [],
+    department: "正在加载...",
   },
   onLoad: function () {
+    var _this = this;
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -35,6 +39,26 @@ Page({
         }
       })
     }
+    wx.request({
+      url: 'https://shgic.com/sysDepartment/getAllDepartmentList',
+      method: "POST",
+      success: function (res) {
+        if (res.data.data) {
+          _this.setData({
+            departments: res.data.data,
+          });
+          if (res.data.data.length > 0) {
+            _this.setData({
+              departmentIndex: 0,
+              department: _this.data.departments[0].name,
+            });
+          }
+        }
+      },
+      complete: function () {
+        wx.hideLoading();
+      },
+    })
   },
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo;
@@ -56,10 +80,16 @@ Page({
       password: e.detail.value,
     });
   },
-  save: function (event) {
-    wx.showModal({
-      content: "已提交后台审核，请稍后再试",
-      showCancel: false,
-    });
+  bindchangeDepartment: function (event) {
+    this.setData({
+      departmentIndex: event.detail.value,
+      department: this.data.departments[event.detail.value].name,
+    })
+  },
+  bindtapLogin: function (event) {
+    app.login(
+      this.data.userName,
+      this.data.password,
+      this.data.departments[this.data.departmentIndex].id);
   },
 });
