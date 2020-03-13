@@ -2,19 +2,19 @@
   <view class="search-bar">
     <view class="search-bar-warper">
       <icon type="search" size="20" />
-      <input class="search-bar-input" bindchange="search" placeholder="请输入日期，eg: 2020年3月10日" />
+      <input class="search-bar-input" bindchange="search" placeholder="请输入日期，eg: 2020-3-10" value="{{today}}" />
     </view>
   </view>
   <view class="result">
-    <view class="result-group" wx:if="{{searchRes.user!=null}}">
+    <view class="result-group" wx:if="{{employees!=null}}">
       <view class="group">
         <image class="group-image" src="/image/user.png"></image>
-        <text class="group-text">{{searchRes.user.name}}</text>
+        <text class="group-text">{{employees.listName}}</text>
       </view>
-      <view class="user-item" wx:for="{{searchRes.user.itemlist}}" bindtap="detail" data-num="{{index}}">
-        <image class="user-image" src="{{item.pic}}"></image>
+      <view class="user-item" wx:for="{{employees.itemList}}" bindtap="detail" data-num="{{index}}">
+        <image class="user-image" src="{{item.avatarUrl}}"></image>
         <view class="user-text">
-          <text>{{item.name}}</text>
+          <text>{{item.nickName}}</text>
           <view class="arrow"></view>
         </view>
       </view>

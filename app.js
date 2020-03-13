@@ -7,9 +7,9 @@ App({
 
   onLaunch: function() {
     var _this = this;
-    this.globalData.loginInfo = wx.getStorageSync('loginInfo');
-    if (this.globalData.loginInfo) {
-      console.log(this.globalData.loginInfo);
+    this.globalData.employee = wx.getStorageSync('employee');
+    if (this.globalData.employee) {
+      console.log(this.globalData.employee);
     }
 
     // 展示本地存储能力
@@ -44,7 +44,7 @@ App({
     })
   },
 
-  login: function(userName, password, departmentId) {
+  login: function(userName, password, departmentId, switchTabUrl) {
     var _this = this;
     wx.showLoading({
       title: '登录中',
@@ -74,9 +74,19 @@ App({
             wxCode: res.code,
           },
           success: function(res) {
+            wx.hideLoading();
             if (res.data.code == 200) {
-              _this.globalData.loginInfo = res.data;
-              wx.setStorageSync('loginInfo', res.data);
+              _this.globalData.employee = res.data;
+              wx.setStorageSync("employee", res.data);
+              wx.showToast({
+                title: "登录成功",
+                icon: "success",
+              });
+              if (switchTabUrl) {
+                wx.switchTab({
+                  url: switchTabUrl,
+                });
+              }
             }
           },
           complete: function() {

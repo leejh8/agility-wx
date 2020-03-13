@@ -11,7 +11,7 @@ Page({
     departments: [],
     department: "正在加载...",
   },
-  onLoad: function () {
+  onLoad: function() {
     var _this = this;
     if (app.globalData.userInfo) {
       this.setData({
@@ -39,10 +39,15 @@ Page({
         }
       })
     }
+    if (app.globalData.employee) {
+      this.setData({
+        userName: app.globalData.employee.data.loginSysUserVo.nickname,
+      })
+    }
     wx.request({
       url: 'https://shgic.com/sysDepartment/getAllDepartmentList',
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         if (res.data.data) {
           _this.setData({
             departments: res.data.data,
@@ -53,43 +58,60 @@ Page({
               department: _this.data.departments[0].name,
             });
           }
+          _this.sync();
         }
       },
-      complete: function () {
+      complete: function() {
         wx.hideLoading();
       },
     })
   },
-  getUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo;
-    if (app.globalData.userInfo.avatarUrl === "") {
-      app.globalData.userInfo.avatarUrl = app.globalData.emptyAvatarUrl;
+  sync: function() {
+    var _this = this;
+    if (app.globalData.employee && this.data.departments) {
+      this.data.departments.forEach((item, index) => {
+        if (item.id == app.globalData.employee.data.loginSysUserVo.departmentId) {
+          _this.setData({
+            departmentIndex: index,
+            department: _this.data.departments[index].name,
+          });
+        }
+      });
     }
-    this.setData({
-      userInfo: app.globalData.userInfo,
-      hasUserInfo: app.globalData.userInfo != undefined && app.globalData.userInfo != null,
-    });
   },
-  onUserNameChanged: function (e) {
+  getUserInfo: function(e) {
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
+      if (!app.globalData.userInfo.avatarUrl) {
+        app.globalData.userInfo.avatarUrl = app.globalData.emptyAvatarUrl;
+      }
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: app.globalData.userInfo != undefined && app.globalData.userInfo != null,
+      });
+    }
+  },
+  onUserNameChanged: function(e) {
     this.setData({
       userName: e.detail.value,
     });
   },
-  onPasswordChanged: function (e) {
+  onPasswordChanged: function(e) {
     this.setData({
       password: e.detail.value,
     });
   },
-  bindchangeDepartment: function (event) {
+  bindchangeDepartment: function(event) {
     this.setData({
       departmentIndex: event.detail.value,
       department: this.data.departments[event.detail.value].name,
     })
   },
-  bindtapLogin: function (event) {
+  bindtapLogin: function(event) {
     app.login(
       this.data.userName,
       this.data.password,
-      this.data.departments[this.data.departmentIndex].id);
+      this.data.departments[this.data.departmentIndex].id,
+      "/pages/search/search");
   },
 });
