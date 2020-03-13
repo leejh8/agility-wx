@@ -1,7 +1,16 @@
 //app.js
 App({
-  onLaunch: function () {
+  globalData: {
+    userInfo: null,
+    emptyAvatarUrl: "https://iknow-pic.cdn.bcebos.com/35a85edf8db1cb132eaa3ca1de54564e93584b44?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1",
+  },
+
+  onLaunch: function() {
     var _this = this;
+    this.globalData.loginInfo = wx.getStorageSync('loginInfo');
+    if (this.globalData.loginInfo) {
+      console.log(this.globalData.loginInfo);
+    }
 
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -34,12 +43,9 @@ App({
       }
     })
   },
-  globalData: {
-    userInfo: null,
-    emptyAvatarUrl: "https://iknow-pic.cdn.bcebos.com/35a85edf8db1cb132eaa3ca1de54564e93584b44?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1",
-  },
 
-  login: function (userName, password, departmentId) {
+  login: function(userName, password, departmentId) {
+    var _this = this;
     wx.showLoading({
       title: '登录中',
     });
@@ -50,7 +56,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         wx.request({
           url: 'https://shgic.com/wx/signup',
-          method: "post",
+          method: "POST",
           data: {
             departmentId: departmentId,
             name: userName,
@@ -67,10 +73,13 @@ App({
             },
             wxCode: res.code,
           },
-          success: function (res) {
-            console.log(res);
+          success: function(res) {
+            if (res.data.code == 200) {
+              _this.globalData.loginInfo = res.data;
+              wx.setStorageSync('loginInfo', res.data);
+            }
           },
-          complete: function () {
+          complete: function() {
             wx.hideLoading();
           },
         });
