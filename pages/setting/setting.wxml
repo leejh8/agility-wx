@@ -18,7 +18,7 @@
     </view>
     <view class="flex-wrap input-wrap">
       <text class="label">项目组</text>
-      <picker class="department-picker" mode="selector" bindchange="bindchangeDepartment" value="{{departmentIndex}}" range="{{departments}}" range-key="{{'name'}}" disabled>
+      <picker class="department-picker" mode="selector" bindchange="bindchangeDepartment" value="{{departmentIndex}}" range="{{departments}}" range-key="{{'name'}}">
         <text class="label">{{department}}</text>
       </picker>
     </view>

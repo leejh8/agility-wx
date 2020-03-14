@@ -22,7 +22,7 @@
         "pagePath": "pages/setting/setting",
         "iconPath": "image/tabbar/setting.png",
         "selectedIconPath": "image/tabbar/setting-hl.png",
-        "text": "设置"
+        "text": "我"
       }
     ]
   },
