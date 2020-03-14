@@ -14,14 +14,13 @@
     </view>
     <view class="flex-wrap input-wrap">
       <text class="label">密码</text>
-      <input password bindinput="onPasswordChanged" id="password" class="account-info-input" />
+      <input password bindinput="onPasswordChanged" id="password" class="account-info-input" placeholder="可不填"/>
     </view>
     <view class="flex-wrap input-wrap">
       <text class="label">项目组</text>
-      <picker mode="selector" bindchange="bindchangeDepartment" value="{{departmentIndex}}" range="{{departments}}" range-key="{{'name'}}">
+      <picker class="department-picker" mode="selector" bindchange="bindchangeDepartment" value="{{departmentIndex}}" range="{{departments}}" range-key="{{'name'}}" disabled>
         <text class="label">{{department}}</text>
       </picker>
-
     </view>
   </view>
   <text wx:if="{{error}}" class="error">{{error}}</text>

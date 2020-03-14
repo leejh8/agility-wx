@@ -23,34 +23,49 @@ var pageObject = {
           token: app.globalData.employee.data.token,
         },
         success: function(res) {
-          var employees = {
+          var employee = {
             listName: "未打卡员工",
-            itemList: [],
+            items: [],
           };
-          res.data.data.forEach((item, index) => {
-            employees.itemList.push({
-              nickName: item.nickname,
-              avatarUrl: item.avatarUrl == null ? app.globalData.emptyAvatarUrl : item.avatarUrl,
+          if (res.statusCode == 401) {
+            setTimeout(() => {
+              wx.showToast({
+                title: "请先登录",
+                icon: "loading",
+                duration: 3000,
+              }), 1000
+            });
+            wx.switchTab({
+              url: '/pages/setting/setting',
             })
-          });
-          that.setData({
-            employees: employees,
-          });
+          } else {
+            if (res.data && res.data.data) {
+              res.data.data.forEach((item, index) => {
+                employee.items.push({
+                  nickName: item.nickname,
+                  avatarUrl: item.avatarUrl == null ? app.globalData.emptyAvatarUrl : item.avatarUrl,
+                })
+              });
+              that.setData({
+                employee: employee,
+              });
+              wx.showToast({
+                title: "搜索到 " + employee.items.length + " 条记录",
+                icon: "success",
+              });
+            }
+          }
           wx.hideLoading();
-          wx.showToast({
-            title: "搜索到 " +  employees.itemList.length + " 条记录" ,
-            icon: "success",
-          });
         }
       });
     }
   },
   detail: function(event) {
     var num = event.currentTarget.dataset.num;
-    var res = this.data.searchRes.user.itemlist[num];
+    var res = this.data.employee.items[num];
     wx.showModal({
       title: "咦",
-      content: "没有 " + res.name + " 的信息",
+      content: "没有 " + res.nickName + " 的信息",
       showCancel: false,
     });
   },

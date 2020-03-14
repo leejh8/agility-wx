@@ -112,6 +112,16 @@ Page({
       this.data.userName,
       this.data.password,
       this.data.departments[this.data.departmentIndex].id,
-      "/pages/search/search");
+      (res) => {
+        wx.showToast({
+          title: "已登录",
+          icon: "success",
+        });
+        setTimeout(() => {
+          wx.switchTab({
+            url: "/pages/search/search",
+          });
+        }, 1000);
+      });
   },
 });

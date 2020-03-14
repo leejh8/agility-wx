@@ -44,7 +44,7 @@ App({
     })
   },
 
-  login: function(userName, password, departmentId, switchTabUrl) {
+  login: function(userName, password, departmentId, success) {
     var _this = this;
     wx.showLoading({
       title: '登录中',
@@ -54,6 +54,40 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        wx.request({
+          url: 'https://shgic.com/wx/login',
+          method: "POST",
+          data: {
+            wxCode: res.code,
+          },
+          success: function(res) {
+            switch (res.data.code) {
+              case 200:
+                {
+                  _this.logined(res.data, success);
+                  wx.hideLoading();
+                }
+                break;
+
+              case 202:
+                {
+                  _this.signup(userName, password, departmentId, success);
+                }
+                break;
+            }
+          },
+          fail: function(){
+            wx.hideLoading();
+          }
+        });
+      },
+    });
+  },
+
+  signup: function(userName, password, departmentId, success) {
+    var _this = this;
+    wx.login({
+      success: res => {
         wx.request({
           url: 'https://shgic.com/wx/signup',
           method: "POST",
@@ -73,27 +107,40 @@ App({
             },
             wxCode: res.code,
           },
-          success: function(res) {
-            wx.hideLoading();
-            if (res.data.code == 200) {
-              _this.globalData.employee = res.data;
-              wx.setStorageSync("employee", res.data);
-              wx.showToast({
-                title: "登录成功",
-                icon: "success",
-              });
-              if (switchTabUrl) {
-                wx.switchTab({
-                  url: switchTabUrl,
-                });
-              }
+          success: function (res) {
+            switch (res.data.code) {
+              case 200:
+                {
+                  _this.logined(res.data, success);
+                }
+                break;
+
+              case 500:
+                {
+                  wx.showModal({
+                    title: res.data.msg,
+                    content: res.data.data,
+                  });
+                }
+                break;
             }
+            wx.hideLoading();
           },
-          complete: function() {
+          fail: function () {
             wx.hideLoading();
           },
         });
       }
     });
+  },
+
+  logined: function(employee, success) {
+    if (employee) {
+      this.globalData.employee = employee;
+      wx.setStorageSync("employee", employee);
+      if (success) {
+        success(employee);
+      }
+    }
   },
 })
